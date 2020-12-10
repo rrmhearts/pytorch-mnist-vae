@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.misc import imsave
-from scipy.misc import imresize
+# from scipy.misc import imsave
+import imageio
+# from scipy.misc import imresize
 
 
 class Plot_Reproduce_Performance():
@@ -25,7 +26,7 @@ class Plot_Reproduce_Performance():
 
     def save_images(self, images, name='result.jpg'):
         images = images.reshape(self.n_img_x * self.n_img_y, self.img_h, self.img_w)
-        imsave(self.DIR + "/" + name, self._merge(images, [self.n_img_y, self.n_img_x]))
+        imageio.imwrite(self.DIR + "/" + name, self._merge(images, [self.n_img_y, self.n_img_x]))
 
     def _merge(self, images, size):
         h, w = images.shape[1], images.shape[2]
@@ -39,7 +40,9 @@ class Plot_Reproduce_Performance():
             i = int(idx % size[1])
             j = int(idx / size[1])
 
-            image_ = imresize(image, size=(w_, h_), interp='bicubic')
+            # image_ = imresize(image, size=(w_, h_), interp='bicubic')
+            #my_image = scipy.misc.imresize(image, size=(64,64)).reshape((1, 64*64*3)).T
+            image_ = image.reshape((w_, h_)) # no imresize here
 
             img[j * h_:j * h_ + h_, i * w_:i * w_ + w_] = image_
 
@@ -90,7 +93,7 @@ class Plot_Manifold_Learning_Result():
 
     def save_images(self, images, name='result.jpg'):
         images = images.reshape(self.n_img_x * self.n_img_y, self.img_h, self.img_w)
-        imsave(self.DIR + "/" + name, self._merge(images, [self.n_img_y, self.n_img_x]))
+        imageio.imwrite(self.DIR + "/" + name, self._merge(images, [self.n_img_y, self.n_img_x]))
 
     def _merge(self, images, size):
         h, w = images.shape[1], images.shape[2]

@@ -187,7 +187,8 @@ def main(args):
     # np.random.seed(222)
 
 
-    device = torch.device('cuda')
+    # device = torch.device('cuda')
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     RESULTS_DIR = args.results_path
     ADD_NOISE = args.add_noise
